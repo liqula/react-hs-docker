@@ -1,9 +1,13 @@
 FROM ubuntu:16.04
+# https://wiki.ubuntu.com/Releases
 
 RUN apt-get update && \
     apt-get install -y apt-utils software-properties-common && \
     apt-get install -y locales && \
     locale-gen en_US.UTF-8
+
+ENV GIT_BRANCH=11-fix-selenium-tests
+#ENV GIT_BRANCH=master
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
@@ -49,24 +53,10 @@ RUN \
     wget $SELENIUM_URL -O $SELENIUM_PATH && \
     sha512sum $SELENIUM_PATH | grep -q $SELENIUM_HASH && \
     \
-    echo ">>==>> cloning react-hs..." && \
+    echo ">>==>> cloning and building react-hs..." && \
     mkdir /.stack-work && \
-    git clone https://github.com/liqula/react-hs -b 11-fix-selenium-tests && \
-    \
-    cd /react-hs/react-hs && \
-    echo -n ">>==>>" && pwd && ln -s /.stack-work && stack setup && stack install --fast --only-dependencies --test --no-run-tests && \
-    \
-    cd /react-hs/react-hs/test/spec && \
-    echo -n ">>==>>" && pwd && ln -s /.stack-work && stack setup && stack install --fast --only-dependencies --test --no-run-tests && \
-    \
-    cd /react-hs/react-hs-examples && \
-    echo -n ">>==>>" && pwd && ln -s /.stack-work && stack setup && stack install --fast --only-dependencies --test --no-run-tests && \
-    \
-    cd /react-hs/react-hs-examples/spec && \
-    echo -n ">>==>>" && pwd && ln -s /.stack-work && stack setup && stack install --fast --only-dependencies --test --no-run-tests && \
-    \
-    cd /react-hs/react-hs-servant && \
-    echo -n ">>==>>" && pwd && ln -s /.stack-work && stack setup && stack install --fast --only-dependencies --test --no-run-tests && \
+    git clone https://github.com/liqula/react-hs -b $GIT_BRANCH && \
+    cd /react-hs && ./.travis/docker-build.sh && \
     \
     echo "all done."
 
