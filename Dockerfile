@@ -56,7 +56,7 @@ RUN \
     echo ">>==>> cloning and building react-hs..." && \
     mkdir /.stack-work && \
     git clone https://github.com/liqula/react-hs -b $GIT_BRANCH && \
-    cd /react-hs && ./.travis/docker-build.sh && \
+    cd /react-hs && ./scripts/build.sh && \
     \
     echo "all done."
 
