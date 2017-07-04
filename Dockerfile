@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y apt-utils apt-transport-https software-properties-common locales && \
     locale-gen en_US.UTF-8
 
-ENV GIT_BRANCH=11-fix-selenium-tests
+ENV GIT_BRANCH=master
 #ENV GIT_BRANCH=master
 
 ENV LANG en_US.UTF-8
