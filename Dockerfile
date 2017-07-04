@@ -2,8 +2,7 @@ FROM ubuntu:16.04
 # https://wiki.ubuntu.com/Releases
 
 RUN apt-get update && \
-    apt-get install -y apt-utils software-properties-common && \
-    apt-get install -y locales && \
+    apt-get install -y apt-utils apt-transport-https software-properties-common locales && \
     locale-gen en_US.UTF-8
 
 ENV GIT_BRANCH=11-fix-selenium-tests
@@ -37,10 +36,10 @@ RUN \
     \
     echo ">>==>> installing apt dependencies..." && \
     apt-get install -y \
-        nodejs npm nodejs-dev g++ openjdk-9-jre stack make git \
+        nodejs npm nodejs-dev g++ openjdk-9-jre stack cabal-install make git \
         chromium-chromedriver firefox tidy curl wget libcurl4-gnutls-dev netcat \
         xvfb x11vnc \
-        libtinfo-dev \
+        libtinfo-dev libncurses5-dev \
         zlib1g-dev libpq-dev libicu-dev psmisc tmux vim && \
     ln -s `which nodejs` /usr/bin/node && \
     \
