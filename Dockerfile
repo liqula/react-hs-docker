@@ -53,7 +53,7 @@ RUN \
     sha512sum $SELENIUM_PATH | grep -q $SELENIUM_HASH && \
     \
     echo ">>==>> cloning and building react-hs..." && \
-    echo -e "\nallow-different-user: true" >> $HOME/.stack/config.yaml && \
+    mkdir -p $HOME/.stack/ && ( echo ; echo "allow-different-user: true" ) >> $HOME/.stack/config.yaml && \
     git clone https://github.com/liqula/react-hs -b $GIT_BRANCH && \
     cd /react-hs && ./scripts/build.sh && \
     \
